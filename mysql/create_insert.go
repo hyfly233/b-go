@@ -44,7 +44,7 @@ func main() {
         year_col YEAR,
         char_col CHAR(10),
         varchar_col VARCHAR(255),
-        binary_col BINARY(10),
+        binary_col BINARY(255),
         varbinary_col VARBINARY(255),
         tinyblob_col TINYBLOB,
         blob_col BLOB,
@@ -84,7 +84,7 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 	for i := 0; i < 1000; i++ { // Insert 1000 rows of test data
 		_, err = stmt.Exec(
-			rand.Intn(128), rand.Intn(32768), rand.Intn(8388608), rand.Intn(2147483648), rand.Int63(),
+			rand.Intn(128), rand.Intn(256), rand.Intn(512), rand.Intn(1024), rand.Int63(),
 			rand.Float32(), rand.Float64(), rand.Float64()*100, "2025-03-04", "2025-03-04 12:34:56",
 			"2025-03-04 12:34:56", "12:34:56", 2025, "char_data", "varchar_data",
 			[]byte("binary_data"), []byte("varbinary_data"), []byte("tinyblob_data"), []byte("blob_data"), []byte("mediumblob_data"),
