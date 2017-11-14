@@ -42,7 +42,7 @@ func main() {
         timestamp_col TIMESTAMP,
         time_col TIME,
         year_col YEAR,
-        char_col CHAR(10),
+        char_col CHAR(255),
         varchar_col VARCHAR(255),
         binary_col BINARY(255),
         varbinary_col VARBINARY(255),
