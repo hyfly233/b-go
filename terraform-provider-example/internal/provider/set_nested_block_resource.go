@@ -21,26 +21,26 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ resource.Resource = &SetNestedResource{}
-var _ resource.ResourceWithImportState = &SetNestedResource{}
+var _ resource.Resource = &SetNestedBlockResource{}
+var _ resource.ResourceWithImportState = &SetNestedBlockResource{}
 
-func NewSetNestedResource() resource.Resource {
-	return &SetNestedResource{}
+func NewSetNestedBlockResource() resource.Resource {
+	return &SetNestedBlockResource{}
 }
 
-// SetNestedResource defines the resource implementation.
-type SetNestedResource struct {
+// SetNestedBlockResource defines the resource implementation.
+type SetNestedBlockResource struct {
 	client *http.Client
 }
 
-// SetNestedResourceModel describes the resource data model.
+// SetNestedBlockResourceModel describes the resource data model.
 type (
-	SetNestedResourceModel struct {
+	SetNestedBlockResourceModel struct {
 		Id        types.String `tfsdk:"id"`
 		SetNested types.Set    `tfsdk:"set_nested"`
 	}
 
-	SetNestedModel struct {
+	SetNestedBlockModel struct {
 		Uuid          types.String `tfsdk:"uuid"`
 		FixedIp       types.String `tfsdk:"fixed_ip"`
 		FixedIpV4     types.String `tfsdk:"fixed_ip_v4"`
@@ -51,7 +51,7 @@ type (
 )
 
 var (
-	setNestedModelTypeMap = map[string]attr.Type{
+	SetNestedBlockModelTypeMap = map[string]attr.Type{
 		"uuid":           types.StringType,
 		"fixed_ip":       types.StringType,
 		"fixed_ip_v4":    types.StringType,
@@ -61,11 +61,11 @@ var (
 	}
 )
 
-func (r *SetNestedResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_set_nested"
+func (r *SetNestedBlockResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_set_nested_block"
 }
 
-func (r *SetNestedResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *SetNestedBlockResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
 		MarkdownDescription: "Set Nested Example resource",
@@ -78,10 +78,12 @@ func (r *SetNestedResource) Schema(ctx context.Context, req resource.SchemaReque
 					stringplanmodifier.UseStateForUnknown(),
 				},
 			},
-			"set_nested": schema.SetNestedAttribute{
+		},
+
+		Blocks: map[string]schema.Block{
+			"set_nested": schema.SetNestedBlock{
 				MarkdownDescription: "Example configurable attribute",
-				Optional:            true,
-				NestedObject: schema.NestedAttributeObject{
+				NestedObject: schema.NestedBlockObject{
 					Attributes: map[string]schema.Attribute{
 						"uuid": schema.StringAttribute{
 							MarkdownDescription: "经典网络ID",
@@ -116,7 +118,7 @@ func (r *SetNestedResource) Schema(ctx context.Context, req resource.SchemaReque
 	}
 }
 
-func (r *SetNestedResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *SetNestedBlockResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
 		return
@@ -136,8 +138,8 @@ func (r *SetNestedResource) Configure(ctx context.Context, req resource.Configur
 	r.client = client
 }
 
-func (r *SetNestedResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data SetNestedResourceModel
+func (r *SetNestedBlockResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data SetNestedBlockResourceModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -161,8 +163,8 @@ func (r *SetNestedResource) Create(ctx context.Context, req resource.CreateReque
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *SetNestedResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data SetNestedResourceModel
+func (r *SetNestedBlockResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data SetNestedBlockResourceModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -182,8 +184,8 @@ func (r *SetNestedResource) Read(ctx context.Context, req resource.ReadRequest, 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *SetNestedResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data SetNestedResourceModel
+func (r *SetNestedBlockResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var data SetNestedBlockResourceModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -203,8 +205,8 @@ func (r *SetNestedResource) Update(ctx context.Context, req resource.UpdateReque
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *SetNestedResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data SetNestedResourceModel
+func (r *SetNestedBlockResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data SetNestedBlockResourceModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -222,20 +224,20 @@ func (r *SetNestedResource) Delete(ctx context.Context, req resource.DeleteReque
 	// }
 }
 
-func (r *SetNestedResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *SetNestedBlockResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
 
-func (s *SetNestedResourceModel) fnConvert(ctx context.Context) diag.Diagnostics {
+func (s *SetNestedBlockResourceModel) fnConvert(ctx context.Context) diag.Diagnostics {
 	var diags diag.Diagnostics
 
 	sSetNested := s.SetNested
-	var sSetNestedModels []SetNestedModel
-	sSetNested.ElementsAs(ctx, &sSetNestedModels, false)
+	var sSetNestedBlockModels []SetNestedBlockModel
+	sSetNested.ElementsAs(ctx, &sSetNestedBlockModels, false)
 
-	processedSetNestedModels := make([]SetNestedModel, 0)
+	processedSetNestedBlockModels := make([]SetNestedBlockModel, 0)
 
-	for i, model := range sSetNestedModels {
+	for i, model := range sSetNestedBlockModels {
 		model.Port = types.StringValue(fmt.Sprintf("port_id_%d", i))
 		model.Mac = types.StringValue(fmt.Sprintf("mac_address_%d", i))
 
@@ -246,13 +248,13 @@ func (s *SetNestedResourceModel) fnConvert(ctx context.Context) diag.Diagnostics
 			model.FixedIpV4 = mFixedIp
 		}
 
-		processedSetNestedModels = append(processedSetNestedModels, model)
+		processedSetNestedBlockModels = append(processedSetNestedBlockModels, model)
 	}
 
-	if len(processedSetNestedModels) > 0 {
+	if len(processedSetNestedBlockModels) > 0 {
 		sets, diags1 := types.SetValueFrom(ctx, types.ObjectType{
-			AttrTypes: setNestedModelTypeMap,
-		}, processedSetNestedModels)
+			AttrTypes: SetNestedBlockModelTypeMap,
+		}, processedSetNestedBlockModels)
 
 		diags.Append(diags1...)
 

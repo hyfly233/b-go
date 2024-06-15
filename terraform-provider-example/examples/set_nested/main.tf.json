@@ -6,9 +6,14 @@
           {
             "uuid": "123",
             "fixed_ip": "127.0.0.1"
-          },
+          }
+        ]
+      },
+      "test02": {
+        "set_nested": [
           {
             "uuid": "234",
+            "fixed_ip": "127.0.0.1",
             "enable_gateway": true
           }
         ]
