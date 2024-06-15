@@ -1,0 +1,18 @@
+{
+  "resource": {
+    "example_set_nested": {
+      "test01": {
+        "set_nested": [
+          {
+            "uuid": "123",
+            "fixed_ip": "127.0.0.1"
+          },
+          {
+            "uuid": "234",
+            "enable_gateway": true
+          }
+        ]
+      }
+    }
+  }
+}
