@@ -90,6 +90,7 @@ func (r *SetNestedResource) Schema(ctx context.Context, req resource.SchemaReque
 						"fixed_ip": schema.StringAttribute{
 							MarkdownDescription: "指定IP地址",
 							Optional:            true,
+							Computed:            true,
 						},
 						"fixed_ip_v4": schema.StringAttribute{
 							MarkdownDescription: "指定IPv4地址",
@@ -243,7 +244,8 @@ func (s *SetNestedResourceModel) fnConvert(ctx context.Context) diag.Diagnostics
 
 		mFixedIp := model.FixedIp
 		if mFixedIp.IsNull() || mFixedIp.IsUnknown() {
-			model.FixedIpV4 = types.StringValue(fmt.Sprintf("fixed_ip_%d", i))
+			model.FixedIp = types.StringValue(fmt.Sprintf("fixed_ip_%d", i))
+			model.FixedIpV4 = types.StringValue(fmt.Sprintf("fixed_ip_v4_%d", i))
 		} else {
 			model.FixedIpV4 = mFixedIp
 		}
