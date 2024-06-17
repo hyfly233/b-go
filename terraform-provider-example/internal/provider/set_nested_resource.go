@@ -6,6 +6,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"net/http"
 
 	"github.com/hashicorp/terraform-plugin-framework/attr"
@@ -13,7 +14,6 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -108,6 +108,8 @@ func (r *SetNestedResource) Schema(ctx context.Context, req resource.SchemaReque
 							Optional:            true,
 							Computed:            true,
 							Default:             booldefault.StaticBool(false),
+
+							//Required:            true,
 						},
 					},
 				},
@@ -255,6 +257,10 @@ func (s *SetNestedResourceModel) fnConvert(ctx context.Context) diag.Diagnostics
 		}, processedSetNestedModels)
 
 		diags.Append(diags1...)
+
+		if diags.HasError() {
+			return diags
+		}
 
 		s.SetNested = sets
 	}

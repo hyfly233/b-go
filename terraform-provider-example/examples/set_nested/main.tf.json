@@ -13,7 +13,6 @@
         "set_nested": [
           {
             "uuid": "234",
-            "fixed_ip": "127.0.0.1",
             "enable_gateway": true
           }
         ]
