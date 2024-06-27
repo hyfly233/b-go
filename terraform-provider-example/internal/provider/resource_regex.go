@@ -22,32 +22,32 @@ import (
 )
 
 // Ensure provider defined types fully satisfy framework interfaces.
-var _ resource.Resource = &RegexResource{}
-var _ resource.ResourceWithImportState = &RegexResource{}
+var _ resource.Resource = &ResourceRegex{}
+var _ resource.ResourceWithImportState = &ResourceRegex{}
 
-func NewRegexResource() resource.Resource {
-	return &RegexResource{}
+func NewResourceRegex() resource.Resource {
+	return &ResourceRegex{}
 }
 
-// RegexResource defines the resource implementation.
-type RegexResource struct {
+// ResourceRegex defines the resource implementation.
+type ResourceRegex struct {
 	client *http.Client
 }
 
-// RegexResourceModel describes the resource data model.
+// ResourceRegexModel describes the resource data model.
 type (
-	RegexResourceModel struct {
+	ResourceRegexModel struct {
 		Id    types.String `tfsdk:"id"`
 		Name  types.String `tfsdk:"name"`
 		Alias types.String `tfsdk:"alias"`
 	}
 )
 
-func (r *RegexResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
+func (r *ResourceRegex) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
 	resp.TypeName = req.ProviderTypeName + "_regex"
 }
 
-func (r *RegexResource) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
+func (r *ResourceRegex) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		// This description is used by the documentation generator and the language server.
 		MarkdownDescription: "Set Nested Example resource",
@@ -87,7 +87,7 @@ func (r *RegexResource) Schema(ctx context.Context, req resource.SchemaRequest, 
 	}
 }
 
-func (r *RegexResource) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
+func (r *ResourceRegex) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
 	// Prevent panic if the provider has not been configured.
 	if req.ProviderData == nil {
 		return
@@ -107,8 +107,8 @@ func (r *RegexResource) Configure(ctx context.Context, req resource.ConfigureReq
 	r.client = client
 }
 
-func (r *RegexResource) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
-	var data RegexResourceModel
+func (r *ResourceRegex) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse) {
+	var data ResourceRegexModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -126,8 +126,8 @@ func (r *RegexResource) Create(ctx context.Context, req resource.CreateRequest, 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *RegexResource) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
-	var data RegexResourceModel
+func (r *ResourceRegex) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse) {
+	var data ResourceRegexModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -140,8 +140,8 @@ func (r *RegexResource) Read(ctx context.Context, req resource.ReadRequest, resp
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *RegexResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
-	var data RegexResourceModel
+func (r *ResourceRegex) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
+	var data ResourceRegexModel
 
 	// Read Terraform plan data into the model
 	resp.Diagnostics.Append(req.Plan.Get(ctx, &data)...)
@@ -154,8 +154,8 @@ func (r *RegexResource) Update(ctx context.Context, req resource.UpdateRequest, 
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
 }
 
-func (r *RegexResource) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	var data RegexResourceModel
+func (r *ResourceRegex) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var data ResourceRegexModel
 
 	// Read Terraform prior state data into the model
 	resp.Diagnostics.Append(req.State.Get(ctx, &data)...)
@@ -173,6 +173,6 @@ func (r *RegexResource) Delete(ctx context.Context, req resource.DeleteRequest, 
 	// }
 }
 
-func (r *RegexResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
+func (r *ResourceRegex) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
 	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
 }
