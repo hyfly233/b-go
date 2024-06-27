@@ -1,0 +1,25 @@
+{
+  "resource": {
+    "example_regex": {
+      "test01": {
+        "name": "啊t01"
+      },
+      "test02": {
+        "name": "test01",
+        "alias": "啊"
+      },
+      "test03": {
+        "name": "test01",
+        "alias": "。"
+      },
+      "test04": {
+        "name": "test01",
+        "alias": "."
+      },
+      "test05": {
+        "name": "test01",
+        "alias": ".asd."
+      }
+    }
+  }
+}

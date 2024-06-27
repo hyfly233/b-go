@@ -5,14 +5,15 @@
         "set_nested": [
           {
             "uuid": "123",
-            "fixed_ip": "127.0.0.1"
+            "fixed_ip": "127.0.0.1",
+            "enable_gateway": true
           }
         ]
       },
       "test02": {
         "set_nested": [
           {
-            "uuid": "234",
+            "uuid": "${example_set_nested.test01.id}",
             "enable_gateway": true
           }
         ]
