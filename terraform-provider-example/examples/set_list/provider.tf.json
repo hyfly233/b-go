@@ -1,0 +1,21 @@
+{
+  "terraform": {
+    "required_providers": {
+      "example": {
+        "version": "1.0.0",
+        "source": "test.com/test/example"
+      }
+    }
+  },
+  "provider": {
+    "example": {
+      "endpoint": "${var.endpoint}"
+    }
+  },
+  "variable": {
+    "endpoint": {
+      "type": "string",
+      "default": "endpoint"
+    }
+  }
+}

@@ -44,7 +44,7 @@ type (
 )
 
 func (r *ResourceComputed) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_modifier"
+	resp.TypeName = req.ProviderTypeName + "_computed"
 }
 
 func (r *ResourceComputed) Schema(ctx context.Context, req resource.SchemaRequest, resp *resource.SchemaResponse) {

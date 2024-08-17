@@ -66,25 +66,26 @@ func (p *ScaffoldingProvider) Configure(ctx context.Context, req provider.Config
 	resp.ResourceData = client
 }
 
-func (p *ScaffoldingProvider) Resources(ctx context.Context) []func() resource.Resource {
+func (p *ScaffoldingProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewResourceRegex,
-		NewExampleResource,
-		NewModifierResource,
-		NewSetNestedResource,
+		NewResourceExample,
+		NewResourceModifier,
+		NewResourceSetNested,
 		NewResourceComputed,
+		NewResourceSetListList,
 	}
 }
 
-func (p *ScaffoldingProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
+func (p *ScaffoldingProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		NewDataSourceExample,
 	}
 }
 
-func (p *ScaffoldingProvider) Functions(ctx context.Context) []func() function.Function {
+func (p *ScaffoldingProvider) Functions(_ context.Context) []func() function.Function {
 	return []func() function.Function{
-		NewExampleFunction,
+		NewFunctionExample,
 	}
 }
 

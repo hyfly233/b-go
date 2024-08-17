@@ -1,0 +1,18 @@
+{
+  "resource": {
+    "example_set_list": {
+      "test": {
+        "test_set": [
+          "abc",
+          "bcd",
+          "cde"
+        ],
+        "test_list": [
+          "def",
+          "efg",
+          "fgh"
+        ]
+      }
+    }
+  }
+}
