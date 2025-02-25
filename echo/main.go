@@ -27,7 +27,7 @@ func main() {
 			return
 		}
 
-		log.Printf("\nRequest received:\nMethod:%s\nURL:%s\nHeaders:%s\nBody:%s", c.Request.Method, c.Request.URL.String(), c.Request.Header, string(body))
+		log.Printf("Request received:\nMethod:%s\nURL:%s\nHeaders:%s\nBody:%s", c.Request.Method, c.Request.URL.String(), c.Request.Header, string(body))
 
 		// 设置响应头与请求头一致
 		for key, values := range c.Request.Header {
